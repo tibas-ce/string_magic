@@ -48,4 +48,26 @@ RSpec.describe StringMagic do
       expect(StringMagic.to_camel_case("")).to eq("")
     end
   end
+
+  describe ".to_title_case" do
+    it "converte lowercase para Title Case" do
+      expect(StringMagic.to_title_case("hello world")).to eq("Hello Word")
+    end
+
+    it "converte UPPERCASE para Title Case" do
+      expect(StringMagic.to_title_case("HELLO WORLD")).to eq("Hello World")
+    end
+
+    it "converte snake_case para Title Case" do
+      expect(StringMagic.to_title_case("hello_world")).to eq("Hello World")
+    end
+
+    it "lida com palavras individuais" do
+      expect(StringMagic.to_title_case("hello")).to eq("Hello")
+    end
+
+    it "lida com strings vazias" do
+      expect(StringMagic.to_title_case("")).to eq("")
+    end
+  end
 end
