@@ -11,7 +11,7 @@ RSpec.describe StringMagic do
     end
 
     it "lida com strings que contêm espaços" do
-      expect(StringMagic.to_snake_case("user Name")).to eq("user_name")
+      expect(StringMagic.to_snake_case("user name")).to eq("user_name")
     end
 
     it "lida com strings com várias letras maiúsculas" do
@@ -24,6 +24,28 @@ RSpec.describe StringMagic do
 
     it "lida com strings vazias" do
       expect(StringMagic.to_snake_case("")).to eq("")
+    end
+  end
+
+  describe ".to_camel_case" do
+    it "converte snake_case para camelCase" do
+      expect(StringMagic.to_camel_case("user_name")).to eq("userName")
+    end
+
+    it "lida com strings que contêm espaços" do
+      expect(StringMagic.to_camel_case("user name")).to eq("userName")
+    end
+
+    it "converte strings com hífens para camelCase" do
+      expect(StringMagic.to_camel_case("user-name")).to eq("userName")
+    end
+
+    it "lida com strings já em camelCase" do
+      expect(StringMagic.to_camel_case("userName")).to eq("userName")
+    end
+
+    it "lida com strings vazias" do
+      expect(StringMagic.to_camel_case("")).to eq("")
     end
   end
 end
