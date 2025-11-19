@@ -70,4 +70,34 @@ RSpec.describe StringMagic do
       expect(StringMagic.to_title_case("")).to eq("")
     end
   end
+
+  describe ".remove_special_chars" do
+    it "remove caracteres especiais" do
+      expect(StringMagic.remove_special_chars("hello@world!")).to eq("helloworld")
+    end
+
+    it "mantém caracteres alfanuméricos" do
+      expect(StringMagic.remove_special_chars("user123")).to eq("user123")
+    end
+
+    it "remove multiplos caracteres especiais" do
+      expect(StringMagic.remove_special_chars("h#e$l%l^o&w*o(r)l!d")).to eq("helloworld")
+    end
+
+    it "mantém os espaços por padrão" do
+      expect(StringMagic.remove_special_chars("hello world!")).to eq("hello world")
+    end
+
+    it "remove espaços quando especificado" do
+      expect(StringMagic.remove_special_chars("hello world!", keep_spaces: false)).to eq("helloworld")
+    end
+
+    it "lida com strings que contêm apenas caracteres especiais" do
+      expect(StringMagic.remove_special_chars("!@#$%")).to eq("")
+    end
+
+    it "lida com strings vazias" do
+      expect(StringMagic.remove_special_chars("")).to eq("")
+    end
+  end
 end
