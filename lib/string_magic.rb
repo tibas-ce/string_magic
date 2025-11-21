@@ -56,4 +56,18 @@ module StringMagic
       # Junta as palavras com espaço entre elas
       .join(' ')
   end
+
+  # Remove caracteres especiais
+  def self.remove_special_chars(string, keep_spaces: true)
+    # Retorna string vazia se a entrada for nil ou vazia
+    return "" if string.nil? || string.empty?
+
+    if keep_spaces
+      # Mantém letras, números e espaços (\s), removendo todo o restante
+      string.gsub(/[^a-zA-Z0-9\s]/, '')
+    else
+      # Mantém apenas letras e números
+      string.gsub(/[^a-zA-Z0-9]/, '')
+    end
+  end
 end
