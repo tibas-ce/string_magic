@@ -40,4 +40,20 @@ module StringMagic
     # Junta tudo, mantendo a primeira palavra minúscula e as demais capitalizadas
     ([first_word] + rest).join
   end
+
+  # Converte string para Title Case
+  def self.to_title_case(string)
+    # Retorna string vazia se a entrada for nil ou vazia
+    return "" if string.nil? || string.empty?
+
+    string
+      # Substitui underscores e hífens por espaço
+      .gsub(/[_-]/, ' ')
+      # Divide em palavras, ignorando múltiplos espaços consecutivos
+      .split(/\s+/)
+      # Capitaliza cada palavra (primeira letra maiúscula, resto minúsculo)
+      .map(&:capitalize)
+      # Junta as palavras com espaço entre elas
+      .join(' ')
+  end
 end
