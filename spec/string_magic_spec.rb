@@ -15,7 +15,7 @@ RSpec.describe StringMagic do
     end
 
     it "lida com strings com várias letras maiúsculas" do
-      expect(StringMagic.to_snake_case("getUserHTTPResponse")).to eq("getUserHTTPResponse")
+      expect(StringMagic.to_snake_case("getUserHTTPResponse")).to eq("get_user_http_response")
     end
 
     it "lida com strings em snake_case" do
@@ -51,7 +51,7 @@ RSpec.describe StringMagic do
 
   describe ".to_title_case" do
     it "converte lowercase para Title Case" do
-      expect(StringMagic.to_title_case("hello world")).to eq("Hello Word")
+      expect(StringMagic.to_title_case("hello world")).to eq("Hello World")
     end
 
     it "converte UPPERCASE para Title Case" do
