@@ -200,32 +200,83 @@ RSpec.describe StringMagic do
   end
 
   describe ".remove_special_chars" do
-    it "remove caracteres especiais" do
-      expect(StringMagic.remove_special_chars("hello@world!")).to eq("helloworld")
+    context "remoção básica" do 
+      
+      it "remove caracteres especiais" do
+        expect(StringMagic.remove_special_chars("hello@world!")).to eq("helloworld")
+      end
+  
+      it "mantém caracteres alfanuméricos" do
+        expect(StringMagic.remove_special_chars("user123")).to eq("user123")
+      end
+  
+      it "remove multiplos caracteres especiais" do
+        expect(StringMagic.remove_special_chars("h#e$l%l^o&w*o(r)l!d")).to eq("helloworld")
+      end
+  
+      it "mantém os espaços por padrão" do
+        expect(StringMagic.remove_special_chars("hello world!")).to eq("hello world")
+      end
+  
+      it "remove espaços quando especificado" do
+        expect(StringMagic.remove_special_chars("hello world!", keep_spaces: false)).to eq("helloworld")
+      end
     end
 
-    it "mantém caracteres alfanuméricos" do
-      expect(StringMagic.remove_special_chars("user123")).to eq("user123")
+    context "edge cases" do 
+      it "lida com strings que contêm apenas caracteres especiais" do
+        expect(StringMagic.remove_special_chars("!@#$%")).to eq("")
+      end
+  
+      it "lida com strings vazias" do
+        expect(StringMagic.remove_special_chars("")).to eq("")
+      end
+      
+      it "lida com valores nulos(nil)" do
+        expect(StringMagic.remove_special_chars(nil)).to eq("")
+      end
+
+      it "lida com strings com pontuação" do
+        expect(StringMagic.remove_special_chars("Hello, World!")).to eq("Hello World")
+      end
+
+      it "lida com strings com suportes" do
+        expect(StringMagic.remove_special_chars("test[123]")).to eq("test123")
+      end
+
+      it "lida com strings com citações" do
+        expect(StringMagic.remove_special_chars("'hello' \"world\"")).to eq("hello world")
+      end
+
+      it "lida com strings com símbolos de moeda" do
+        expect(StringMagic.remove_special_chars("$100.50")).to eq("10050")
+      end
+
+      it "lida com strings com operadores matemáticos" do
+        expect(StringMagic.remove_special_chars("2+2=4")).to eq("224")
+      end
+
+      it "lida com strings com sublinhados" do
+        expect(StringMagic.remove_special_chars("hello_world")).to eq("helloworld")
+      end
+
+      it "lida com strings com vários espaços consecutivos" do
+        expect(StringMagic.remove_special_chars("hello    world")).to eq("hello    world")
+      end
+
+      it "preserva o caso" do
+        expect(StringMagic.remove_special_chars("Hello@World!")).to eq("HelloWorld")
+      end
     end
 
-    it "remove multiplos caracteres especiais" do
-      expect(StringMagic.remove_special_chars("h#e$l%l^o&w*o(r)l!d")).to eq("helloworld")
-    end
+    context "casos com acentos" do 
+      it "remove caracteres acentuados por padrão" do
+        expect(StringMagic.remove_special_chars("José María")).to eq("Jos Mara")
+      end
 
-    it "mantém os espaços por padrão" do
-      expect(StringMagic.remove_special_chars("hello world!")).to eq("hello world")
-    end
-
-    it "remove espaços quando especificado" do
-      expect(StringMagic.remove_special_chars("hello world!", keep_spaces: false)).to eq("helloworld")
-    end
-
-    it "lida com strings que contêm apenas caracteres especiais" do
-      expect(StringMagic.remove_special_chars("!@#$%")).to eq("")
-    end
-
-    it "lida com strings vazias" do
-      expect(StringMagic.remove_special_chars("")).to eq("")
+      it "Lida com conteúdo misto" do
+        expect(StringMagic.remove_special_chars("user@josé.com")).to eq("userjoscom")
+      end
     end
   end
 end
