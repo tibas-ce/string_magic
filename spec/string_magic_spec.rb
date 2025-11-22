@@ -279,4 +279,33 @@ RSpec.describe StringMagic do
       end
     end
   end
+
+  # Tetes adicionais para comportamento em conjunto
+  describe "testes de integração" do 
+    it "conversões em cadei corretamente" do
+      input = "getUserHTTPResponse"
+      snake = StringMagic.to_snake_case(input)
+      camel = StringMagic.to_camel_case(snake)
+
+      expect(snake).to eq("get_user_http_response")
+      expect(camel).to eq("getUserHttpResponse")
+    end
+
+    it "lida com strings complexas do mundo real" do 
+      input = "user-profile_data123 Test!"
+      clean = StringMagic.remove_special_chars(input)
+      snake = StringMagic.to_snake_case(clean)
+
+      expect(clean).to eq("userprofiledata123 Test")
+      expect(snake).to eq("userprofiledata123_test")
+    end
+
+    it "preserva dados através de conversões" do 
+      original = "test_data_123"
+      title = StringMagic.to_title_case(original)
+      snake = StringMagic.to_snake_case(title)
+
+      expect(snake).to eq(original)
+    end
+  end
 end
