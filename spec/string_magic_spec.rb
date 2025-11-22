@@ -135,24 +135,67 @@ RSpec.describe StringMagic do
   end
 
   describe ".to_title_case" do
-    it "converte lowercase para Title Case" do
-      expect(StringMagic.to_title_case("hello world")).to eq("Hello World")
+    context "conversões básicas" do 
+      
+      it "converte lowercase para Title Case" do
+        expect(StringMagic.to_title_case("hello world")).to eq("Hello World")
+      end
+  
+      it "converte UPPERCASE para Title Case" do
+        expect(StringMagic.to_title_case("HELLO WORLD")).to eq("Hello World")
+      end
+  
+      it "converte snake_case para Title Case" do
+        expect(StringMagic.to_title_case("hello_world")).to eq("Hello World")
+      end
+  
+      it "lida com palavras individuais" do
+        expect(StringMagic.to_title_case("hello")).to eq("Hello")
+      end
     end
 
-    it "converte UPPERCASE para Title Case" do
-      expect(StringMagic.to_title_case("HELLO WORLD")).to eq("Hello World")
+    context "edge cases" do
+      it "lida com strings vazias" do
+        expect(StringMagic.to_title_case("")).to eq("")
+      end
+      
+      it "lida com valores nulos(nil)" do
+        expect(StringMagic.to_title_case(nil)).to eq("")
+      end
+
+      it "lida com strings e com números" do
+        expect(StringMagic.to_title_case("hello world 123")).to eq("Hello World 123")
+      end
+
+      it "Lida com entrada de dados em maiúsculas e minúsculas mistas" do
+        expect(StringMagic.to_title_case("hELLo WoRLd")).to eq("Hello World")
+      end
+
+      it "lida com strings com hífens" do
+        expect(StringMagic.to_title_case("hello-world")).to eq("Hello World")
+      end
+
+      it "lida com multiplos espaços" do
+        expect(StringMagic.to_title_case("hello    world")).to eq("Hello World")
+      end
+
+      it "lida com frases longas" do
+        expect(StringMagic.to_title_case("the quick brown fox")).to eq("The Quick Brown Fox")
+      end
+
+      it "lida com palavras de caráter únicos" do
+        expect(StringMagic.to_title_case("i am a developer")).to eq("I Am A Developer")
+      end
     end
 
-    it "converte snake_case para Title Case" do
-      expect(StringMagic.to_title_case("hello_world")).to eq("Hello World")
-    end
+    context "casos com acentos" do 
+      it "preserva e capitaliza caracteres acentuados" do
+        expect(StringMagic.to_title_case("josé maria")).to eq("José Maria")
+      end
 
-    it "lida com palavras individuais" do
-      expect(StringMagic.to_title_case("hello")).to eq("Hello")
-    end
-
-    it "lida com strings vazias" do
-      expect(StringMagic.to_title_case("")).to eq("")
+      it "lida com caracteres maisúculos acentuados" do
+        expect(StringMagic.to_title_case("JOSÉ MARIA")).to eq("José Maria")
+      end
     end
   end
 
