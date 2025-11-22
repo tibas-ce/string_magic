@@ -74,24 +74,63 @@ RSpec.describe StringMagic do
   end
 
   describe ".to_camel_case" do
-    it "converte snake_case para camelCase" do
-      expect(StringMagic.to_camel_case("user_name")).to eq("userName")
+    context "conversões básicas" do 
+      
+      it "converte snake_case para camelCase" do
+        expect(StringMagic.to_camel_case("user_name")).to eq("userName")
+      end
+  
+      it "lida com strings que contêm espaços" do
+        expect(StringMagic.to_camel_case("user name")).to eq("userName")
+      end
+  
+      it "converte strings com hífens para camelCase" do
+        expect(StringMagic.to_camel_case("user-name")).to eq("userName")
+      end
+  
+      it "lida com strings já em camelCase" do
+        expect(StringMagic.to_camel_case("userName")).to eq("userName")
+      end
     end
 
-    it "lida com strings que contêm espaços" do
-      expect(StringMagic.to_camel_case("user name")).to eq("userName")
+    context "edge cases" do
+      it "lida com strings vazias" do
+        expect(StringMagic.to_camel_case("")).to eq("")
+      end
+      
+      it "lida com valores nulos(nil)" do
+        expect(StringMagic.to_camel_case(nil)).to eq("")
+      end
+
+      it "manipula a palavra única" do
+        expect(StringMagic.to_camel_case("user")).to eq("user")
+      end
+
+      it "lida com strings com números" do
+        expect(StringMagic.to_camel_case("user_123_name")).to eq("user123Name")
+      end
+
+      it "lida com vários sublinhados" do
+        expect(StringMagic.to_camel_case("user___name")).to eq("userName")
+      end
+
+      it "manipula separadores mistos" do
+        expect(StringMagic.to_camel_case("user-name_test data")).to eq("userNameTestData")
+      end
+
+      it "lida com strings com três ou mais palavras" do
+        expect(StringMagic.to_camel_case("first_middle_last_name")).to eq("firstMiddleLastName")
+      end
+
+      it "lida com palavras maiúsculas" do
+        expect(StringMagic.to_camel_case("USER_NAME")).to eq("userName")
+      end
     end
 
-    it "converte strings com hífens para camelCase" do
-      expect(StringMagic.to_camel_case("user-name")).to eq("userName")
-    end
-
-    it "lida com strings já em camelCase" do
-      expect(StringMagic.to_camel_case("userName")).to eq("userName")
-    end
-
-    it "lida com strings vazias" do
-      expect(StringMagic.to_camel_case("")).to eq("")
+    context "casos com acentos"  do 
+      it "preserva caracteres acentuados" do
+        expect(StringMagic.to_camel_case(nome_usuário)). to eq("nomeUsuário")
+      end
     end
   end
 
